@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose Gold Salon & Spa | Best Luxury Salon in Coimbatore</title>
+    <meta name="description" content="Rose Gold Salon & Spa is Coimbatore's premier luxury destination for hair, skin, and bridal services. Experience excellence in beauty with our expert stylists.">
+    <meta name="keywords" content="Best Salon in Coimbatore, Beauty Clinic Coimbatore, Luxury Spa Coimbatore, Bridal Makeup Coimbatore, Hair Treatment Coimbatore, Skin Care Tamil Nadu">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        :root {
+            --rose-gold: #C9A96E;
+            --rose-gold-dark: #B08D50;
+            --black: #1A1A1A;
+            --cream: #FAF7F2;
+            --white: #FFFFFF;
+            --text-dark: #2C2C2C;
+            --white: #FFFFFF;
+            --transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        /* --- Silk Transition --- */
+        .curtain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            z-index: 9999;
+            transform: translateY(100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .curtain.active {
+            animation: slideUpDown 1.2s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+        }
+
+        @keyframes slideUpDown {
+            0% { transform: translateY(100%); }
+            50% { transform: translateY(0); }
+            100% { transform: translateY(-100%); }
+        }
+
+        /* --- Reveal --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Sparkle --- */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--rose-gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* --- Typography Tokens --- */
+        .display-lg {
+            font-family: 'Inter', sans-serif;
+            font-size: 60px;
+            font-weight: 300;
+            line-height: 60px;
+            letter-spacing: -0.025em;
+            text-transform: none;
+        }
+
+        .body-md {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 22.75px;
+            letter-spacing: normal;
+            text-transform: none;
+        }
+
+        .label-md {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 16px;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        h1, h2, h3 {
+            color: var(--black);
+            font-weight: 300;
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 22.75px;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(250, 247, 242, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+        }
+
+        .logo {
+            text-decoration: none;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--black);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo span { color: var(--rose-gold); }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--black);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 400;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover { color: var(--rose-gold); }
+
+        .cta-btn {
+            background: var(--rose-gold);
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-size: 11px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover { background: var(--black); }
+
+        /* --- Hero --- */
+        #hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                        url('https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=2074&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 8%;
+        }
+
+        .hero-content { max-width: 800px; }
+        .hero-content h1 { margin-bottom: 1.5rem; }
+        .hero-content p { margin-bottom: 2.5rem; opacity: 0.9; }
+
+        /* --- Sections --- */
+        section { padding: 8rem 8%; }
+        .section-title { text-align: center; margin-bottom: 5rem; }
+        .section-header span { display: block; margin-bottom: 1rem; color: var(--rose-gold); }
+        .section-title h2 { margin-bottom: 1rem; }
+        .section-title .line { width: 60px; height: 3px; background: var(--rose-gold); margin: 0 auto; }
+
+        /* --- Services Strip --- */
+        .services-mini {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            padding: 4rem 8%;
+            background: var(--white);
+            margin-top: -4rem;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .s-item { text-align: center; cursor: pointer; transition: var(--transition); }
+        .s-item:hover { color: var(--rose-gold); transform: translateY(-5px); }
+        .s-item i { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+        .s-item span { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 400; letter-spacing: 1.2px; text-transform: uppercase; }
+
+        /* --- Grid Layouts --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 3rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+        .service-card i { font-size: 3.5rem; color: var(--rose-gold); margin-bottom: 2rem; }
+        .service-card h3 { margin-bottom: 1.5rem; }
+        .service-card p { color: #666; margin-bottom: 2rem; }
+        .service-card .price { display: block; font-family: 'JetBrains Mono', monospace; font-weight: 400; color: var(--rose-gold); font-size: 12px; letter-spacing: 1.2px; margin-bottom: 2rem; }
+
+        /* --- Before & After --- */
+        .ba-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .ba-box { position: relative; height: 400px; overflow: hidden; }
+        .ba-box img { width: 100%; height: 100%; object-fit: cover; }
+        .ba-tag { position: absolute; top: 20px; left: 20px; background: var(--black); color: var(--white); padding: 5px 15px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 400; text-transform: uppercase; letter-spacing: 1.2px; }
+
+        /* --- Masonry Gallery --- */
+        .masonry {
+            columns: 4;
+            column-gap: 1.5rem;
+        }
+
+        .masonry-item {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .masonry-item img { width: 100%; display: block; transition: var(--transition); }
+        .masonry-item:hover img { transform: scale(1.1); }
+
+        /* --- WhatsApp Float --- */
+        .wa-float {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: #25D366;
+            color: white;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 10000;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .wa-float:hover { transform: scale(1.1) rotate(10deg); }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 8rem 8% 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+        }
+
+        .footer-col h4 { color: var(--rose-gold); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 1rem; opacity: 0.7; font-size: 0.9rem; }
+        .footer-col ul li a { color: var(--white); text-decoration: none; transition: var(--transition); }
+        .footer-col ul li a:hover { color: var(--rose-gold); }
+
+        .social-icons { display: flex; gap: 1.5rem; margin-top: 1.5rem; font-size: 1.5rem; }
+        .social-icons a { color: var(--white); transition: var(--transition); }
+        .social-icons a:hover { color: var(--rose-gold); }
+
+        /* --- Page Management --- */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        @media (max-width: 968px) {
+            .nav-links { display: none; }
+            .services-mini { gap: 1.5rem; flex-wrap: wrap; }
+            .ba-container { grid-template-columns: 1fr; }
+            .masonry { columns: 2; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Curtain -->
+    <div id="curtain" class="curtain">
+        <h2 class="display-lg" style="color: var(--rose-gold);">Rose Gold</h2>
+    </div>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/919000000000" class="wa-float">
+        <i class="ph ph-whatsapp-logo"></i>
+    </a>
+
+    <!-- Nav -->
+    <nav>
+        <a href="#" class="logo" onclick="showPage('home')" style="font-family: 'Inter', sans-serif; font-weight: 300;">
+            ROSE<span style="font-weight: 600;">GOLD</span>
+        </a>
+        <div class="nav-links">
+            <a href="#" onclick="showPage('home')">Home</a>
+            <a href="#" onclick="showPage('services')">Services</a>
+            <a href="#" onclick="showPage('gallery')">Gallery</a>
+            <a href="#" onclick="showPage('contact')">Book Now</a>
+        </div>
+        <a href="#contact" class="cta-btn" onclick="showPage('contact')">Reserve Session</a>
+    </nav>
+
+    <!-- --- HOME PAGE --- -->
+    <main id="home-page" class="page active">
+        <header id="hero">
+            <div class="hero-content">
+                <h1 class="display-lg">Transform Yourself. Feel Beautiful.</h1>
+                <p class="body-md">Experience the ultimate in luxury beauty and wellness. Coimbatore's most exclusive sanctuary for hair, skin, and spirit.</p>
+                <a href="#" class="cta-btn" style="padding: 1.2rem 3rem;" onclick="showPage('contact')">Book Consultation</a>
+            </div>
+        </header>
+
+        <div class="services-mini">
+            <div class="s-item" onclick="showPage('services')"><i class="ph ph-scissors"></i><span>Hair</span></div>
+            <div class="s-item" onclick="showPage('services')"><i class="ph ph-sparkle"></i><span>Skin</span></div>
+            <div class="s-item" onclick="showPage('services')"><i class="ph ph-hand-eye"></i><span>Nails</span></div>
+            <div class="s-item" onclick="showPage('services')"><i class="ph ph-crown"></i><span>Bridal</span></div>
+            <div class="s-item" onclick="showPage('services')"><i class="ph ph-paint-brush"></i><span>Makeup</span></div>
+        </div>
+
+        <section id="about">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;">
+                <div class="img-reveal">
+                    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1000&auto=format&fit=crop" alt="Salon" style="width: 100%; border-radius: 4px;">
+                </div>
+                <div>
+                    <span class="label-md">SINCE 2012</span>
+                    <h2 class="display-lg" style="margin: 1.5rem 0;">Excellence in Every Touch.</h2>
+                    <p class="body-md" style="color: #555; margin-bottom: 2rem;">At Rose Gold, we believe beauty is a journey, not a destination. Our team of expert stylists and therapists combine advanced techniques with premium products to deliver results that wow.</p>
+                    <a href="#" class="cta-btn" onclick="showPage('services')">Explore Our Work</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="transformations" style="background: var(--white);" class="reveal">
+            <div class="section-title">
+                <h2 class="display-lg">Real Transformations</h2>
+                <div class="line"></div>
+            </div>
+            <div class="grid">
+                <div class="ba-container">
+                    <div class="ba-box"><div class="ba-tag">Before</div><img src="https://images.unsplash.com/photo-1595476108010-b4d1f80d77d2?q=80&w=800&auto=format&fit=crop" alt="Before"></div>
+                    <div class="ba-box"><div class="ba-tag" style="background: var(--rose-gold);">After</div><img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?q=80&w=800&auto=format&fit=crop" alt="After"></div>
+                </div>
+                <div class="ba-container">
+                    <div class="ba-box"><div class="ba-tag">Before</div><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=800&auto=format&fit=crop" alt="Before"></div>
+                    <div class="ba-box"><div class="ba-tag" style="background: var(--rose-gold);">After</div><img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop" alt="After"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials">
+            <div class="section-title">
+                <h2 class="display-lg">Kind Words</h2>
+                <div class="line"></div>
+            </div>
+            <div class="grid">
+                <div class="service-card" style="padding: 3rem; border: none;">
+                    <div style="color: var(--rose-gold); margin-bottom: 1.5rem;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                    <p style="font-style: italic; margin-bottom: 2rem;">"The best bridal makeup experience I could have asked for. They made me feel like a queen on my big day!"</p>
+                    <h4 class="serif">— Meenakshi R., Coimbatore</h4>
+                </div>
+                <div class="service-card" style="padding: 3rem; border: none;">
+                    <div style="color: var(--rose-gold); margin-bottom: 1.5rem;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                    <p style="font-style: italic; margin-bottom: 2rem;">"Expert hair coloring. I went from dark brown to a beautiful honey blonde and my hair still feels healthy."</p>
+                    <h4 class="serif">— Sarah J., Coimbatore</h4>
+                </div>
+                <div class="service-card" style="padding: 3rem; border: none;">
+                    <div style="color: var(--rose-gold); margin-bottom: 1.5rem;"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                    <p style="font-style: italic; margin-bottom: 2rem;">"The atmosphere is so relaxing. Their facials are next level. Highly recommended for a self-care day."</p>
+                    <h4 class="serif">— Priya S., Coimbatore</h4>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- --- SERVICES PAGE --- -->
+    <main id="services-page" class="page">
+        <section style="padding-top: 10rem;">
+            <div class="section-title">
+                <h2 class="display-lg">Our Menu</h2>
+                <div class="line"></div>
+            </div>
+            <div class="grid" id="services-grid">
+                <!-- Loaded via JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- --- GALLERY PAGE --- -->
+    <main id="gallery-page" class="page">
+        <section style="padding-top: 10rem;">
+            <div class="section-title">
+                <h2 class="display-lg">Art in Motion</h2>
+                <div class="line"></div>
+            </div>
+            <div class="masonry" id="gallery-grid">
+                <!-- Loaded via JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- --- CONTACT PAGE --- -->
+    <main id="contact-page" class="page">
+        <section style="padding-top: 10rem;">
+            <div class="section-title">
+                <h2 class="display-lg">Reserve Your Experience</h2>
+                <div class="line"></div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 5rem; background: var(--white); padding: 5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
+                <form>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <input type="text" placeholder="Name" style="padding: 1rem; border: 1px solid #EEE; outline: none; background: #fcfcfc;">
+                        <input type="tel" placeholder="Phone" style="padding: 1rem; border: 1px solid #EEE; outline: none; background: #fcfcfc;">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <select style="padding: 1rem; border: 1px solid #EEE; outline: none; background: #fcfcfc;">
+                            <option>Service Interested In</option>
+                            <option>Hair Services</option>
+                            <option>Skin Treatment</option>
+                            <option>Bridal Makeup</option>
+                            <option>Nail Art</option>
+                        </select>
+                        <input type="date" style="padding: 1rem; border: 1px solid #EEE; outline: none; background: #fcfcfc;">
+                    </div>
+                    <textarea placeholder="Special Requests..." rows="5" style="width: 100%; padding: 1rem; border: 1px solid #EEE; outline: none; background: #fcfcfc; margin-bottom: 2rem;"></textarea>
+                    <button type="submit" class="cta-btn" style="width: 100%;">Submit Booking Request</button>
+                    <a href="https://wa.me/919000000000" class="cta-btn" style="width: 100%; display: block; text-align: center; background: #25D366; margin-top: 1rem;">Book Instantly via WhatsApp</a>
+                </form>
+                <div>
+                    <h3 class="serif" style="margin-bottom: 2rem;">Visit Our Sanctuary</h3>
+                    <p style="margin-bottom: 2.5rem;"><i class="ph ph-map-pin" style="color: var(--rose-gold);"></i> No. 12, Race Course Road,<br>Gopalapuram, Coimbatore,<br>Tamil Nadu 641018</p>
+                    
+                    <h4 class="serif" style="margin-bottom: 1rem;">Opening Hours</h4>
+                    <p style="margin-bottom: 2.5rem;">Tue - Sun: 10:00 AM - 8:30 PM<br>Mon: Closed (Weekly Holiday)</p>
+                    
+                    <h4 class="serif" style="margin-bottom: 1rem;">Contact Us</h4>
+                    <p>+91 422 245 0000<br>hello@rosegoldsalon.in</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <a href="#" class="logo" style="color: var(--white); margin-bottom: 1.5rem;">ROSE<span>GOLD</span></a>
+                <p style="opacity: 0.6;">Coimbatore's premier luxury destination for beauty and wellness since 2012.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="ph ph-instagram-logo"></i></a>
+                    <a href="#"><i class="ph ph-facebook-logo"></i></a>
+                    <a href="#"><i class="ph ph-pinterest-logo"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Treatments</h4>
+                <ul>
+                    <li><a href="#" onclick="showPage('services')">Luxury Facials</a></li>
+                    <li><a href="#" onclick="showPage('services')">Hair Coloring</a></li>
+                    <li><a href="#" onclick="showPage('services')">Bridal Makeover</a></li>
+                    <li><a href="#" onclick="showPage('services')">Spa Therapies</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('services')">Our Menu</a></li>
+                    <li><a href="#" onclick="showPage('gallery')">Work Gallery</a></li>
+                    <li><a href="#" onclick="showPage('contact')">Book Now</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Our Location</h4>
+                <p style="opacity: 0.7;">Race Course Road,<br>Coimbatore - 641018</p>
+                <p style="opacity: 0.7; margin-top: 1rem;">+91 422 245 0000</p>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 Rose Gold Salon & Spa. Elegance by Antigravity.
+        </div>
+    </footer>
+
+    <script>
+        const services = [
+            { name: "Hair Couture", icon: "ph-scissors", desc: "Expert cutting, coloring, and styling tailored to your face shape.", price: "Starts from ₹1,200" },
+            { name: "Skin Radiance", icon: "ph-sparkle", desc: "Advanced facials and clinical skin treatments for a youthful glow.", price: "Starts from ₹2,500" },
+            { name: "Bridal Artistry", icon: "ph-crown", desc: "Exclusive bridal packages including makeup, hair, and draping.", price: "Starts from ₹15,000" },
+            { name: "Nail Boutique", icon: "ph-hand-eye", desc: "Premium gel extensions, nail art, and luxury spa pedicures.", price: "Starts from ₹800" },
+            { name: "Makeup Bar", icon: "ph-paint-brush", desc: "HD and Airbrush makeup for parties, events, and photoshoots.", price: "Starts from ₹3,500" },
+            { name: "Spa Wellness", icon: "ph-wind", desc: "Relaxing aromatherapy and deep tissue massages for total rejuvenation.", price: "Starts from ₹2,000" }
+        ];
+
+        const galleryImages = [
+            "https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=800",
+            "https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800",
+            "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=800",
+            "https://images.unsplash.com/photo-1595476108010-b4d1f80d77d2?q=80&w=800",
+            "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=800",
+            "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800",
+            "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?q=80&w=800",
+            "https://images.unsplash.com/photo-1527799822367-a05eb570737f?q=80&w=800"
+        ];
+
+        function loadContent() {
+            const sGrid = document.getElementById('services-grid');
+            const gGrid = document.getElementById('gallery-grid');
+            
+            if (sGrid) {
+                sGrid.innerHTML = services.map(s => `
+                    <div class="service-card">
+                        <i class="ph ${s.icon}"></i>
+                        <h3 class="display-lg" style="font-size: 24px; line-height: 32px; margin-bottom: 1rem;">${s.name}</h3>
+                        <p class="body-md" style="margin-bottom: 1rem;">${s.desc}</p>
+                        <span class="price">${s.price}</span>
+                        <a href="https://wa.me/919000000000?text=Booking for ${s.name}" class="cta-btn">Book Now</a>
+                    </div>
+                `).join('');
+            }
+
+            if (gGrid) {
+                gGrid.innerHTML = galleryImages.map(img => `
+                    <div class="masonry-item">
+                        <img src="${img}&auto=format&fit=crop" alt="Gallery Work" onerror="this.src='https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=500';">
+                    </div>
+                `).join('');
+            }
+        }
+
+        function showPage(pageId) {
+            const curtain = document.getElementById('curtain');
+            curtain.classList.add('active');
+            setTimeout(() => {
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById(pageId + '-page').classList.add('active');
+                window.scrollTo(0,0);
+                ScrollTrigger.refresh();
+            }, 600);
+            setTimeout(() => curtain.classList.remove('active'), 1200);
+        }
+
+        // --- Sparkle Effect ---
+        function initSparkles() {
+            document.addEventListener('mousemove', (e) => {
+                if (Math.random() > 0.8) {
+                    const s = document.createElement('div');
+                    s.className = 'sparkle';
+                    s.style.left = e.pageX + 'px';
+                    s.style.top = e.pageY + 'px';
+                    document.body.appendChild(s);
+                    gsap.to(s, {
+                        opacity: 0,
+                        scale: 3,
+                        y: -20,
+                        duration: 1,
+                        onComplete: () => s.remove()
+                    });
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadContent();
+            initSparkles();
+            
+            // GSAP Animations
+            gsap.registerPlugin(ScrollTrigger);
+
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            reveals.forEach(r => observer.observe(r));
+
+            gsap.from(".hero-content", { duration: 1.5, opacity: 0, y: 50, ease: "power4.out" });
+        });
+    </script>
+</body>
+</html>
