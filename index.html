@@ -6,19 +6,19 @@
     <title>Rose Gold Salon & Spa | Best Luxury Salon in Coimbatore</title>
     <meta name="description" content="Rose Gold Salon & Spa is Coimbatore's premier luxury destination for hair, skin, and bridal services. Experience excellence in beauty with our expert stylists.">
     <meta name="keywords" content="Best Salon in Coimbatore, Beauty Clinic Coimbatore, Luxury Spa Coimbatore, Bridal Makeup Coimbatore, Hair Treatment Coimbatore, Skin Care Tamil Nadu">
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-    
+
     <!-- Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    
+
     <!-- GSAP for Animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
+
     <style>
         :root {
             --rose-gold: #C9A96E;
@@ -27,7 +27,6 @@
             --cream: #FAF7F2;
             --white: #FFFFFF;
             --text-dark: #2C2C2C;
-            --white: #FFFFFF;
             --transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
@@ -91,7 +90,7 @@
             font-family: 'Inter', sans-serif;
             font-size: 60px;
             font-weight: 300;
-            line-height: 60px;
+            line-height: 64px;
             letter-spacing: -0.025em;
             text-transform: none;
         }
@@ -186,17 +185,68 @@
             transition: var(--transition);
             border: none;
             cursor: pointer;
+            display: inline-block;
         }
 
         .cta-btn:hover { background: var(--black); }
 
+        /* --- Hamburger --- */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--black);
+            transition: var(--transition);
+        }
+
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* --- Mobile Nav Overlay --- */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--cream);
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+
+        .mobile-nav.open { display: flex; }
+
+        .mobile-nav a {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--black);
+            transition: var(--transition);
+        }
+
+        .mobile-nav a:hover { color: var(--rose-gold); }
+
         /* --- Hero --- */
         #hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
-                        url('https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=2074&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+                        url('https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=2074&auto=format&fit=crop') center/cover no-repeat;
+            background-color: #2C2020;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -206,7 +256,7 @@
         }
 
         .hero-content { max-width: 800px; }
-        .hero-content h1 { margin-bottom: 1.5rem; }
+        .hero-content h1 { margin-bottom: 1.5rem; color: var(--white); }
         .hero-content p { margin-bottom: 2.5rem; opacity: 0.9; }
 
         /* --- Sections --- */
@@ -227,6 +277,7 @@
             position: relative;
             z-index: 10;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            flex-wrap: wrap;
         }
 
         .s-item { text-align: center; cursor: pointer; transition: var(--transition); }
@@ -237,7 +288,7 @@
         /* --- Grid Layouts --- */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 3rem;
         }
 
@@ -255,6 +306,20 @@
         .service-card p { color: #666; margin-bottom: 2rem; }
         .service-card .price { display: block; font-family: 'JetBrains Mono', monospace; font-weight: 400; color: var(--rose-gold); font-size: 12px; letter-spacing: 1.2px; margin-bottom: 2rem; }
 
+        /* --- About Grid --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .about-grid img {
+            width: 100%;
+            border-radius: 4px;
+            display: block;
+        }
+
         /* --- Before & After --- */
         .ba-container {
             display: grid;
@@ -263,8 +328,8 @@
             margin-bottom: 3rem;
         }
 
-        .ba-box { position: relative; height: 400px; overflow: hidden; }
-        .ba-box img { width: 100%; height: 100%; object-fit: cover; }
+        .ba-box { position: relative; height: 400px; overflow: hidden; background: #e8e0d8; }
+        .ba-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .ba-tag { position: absolute; top: 20px; left: 20px; background: var(--black); color: var(--white); padding: 5px 15px; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 400; text-transform: uppercase; letter-spacing: 1.2px; }
 
         /* --- Masonry Gallery --- */
@@ -279,10 +344,39 @@
             margin-bottom: 1.5rem;
             position: relative;
             overflow: hidden;
+            background: #e8e0d8;
         }
 
         .masonry-item img { width: 100%; display: block; transition: var(--transition); }
         .masonry-item:hover img { transform: scale(1.1); }
+
+        /* --- Contact Grid --- */
+        .contact-outer-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 5rem;
+            background: var(--white);
+            padding: 5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        .contact-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form-row input,
+        .contact-form-row select {
+            padding: 1rem;
+            border: 1px solid #EEE;
+            outline: none;
+            background: #fcfcfc;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
 
         /* --- WhatsApp Float --- */
         .wa-float {
@@ -330,16 +424,113 @@
         .social-icons a { color: var(--white); transition: var(--transition); }
         .social-icons a:hover { color: var(--rose-gold); }
 
+        .copyright { text-align: center; opacity: 0.4; font-size: 0.8rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+
         /* --- Page Management --- */
         .page { display: none; }
         .page.active { display: block; }
 
+        /* ========================
+           RESPONSIVE STYLES
+        ======================== */
+
         @media (max-width: 968px) {
+            /* Typography */
+            .display-lg {
+                font-size: 40px;
+                line-height: 46px;
+            }
+
+            /* Navigation */
+            nav { padding: 1rem 5%; }
             .nav-links { display: none; }
-            .services-mini { gap: 1.5rem; flex-wrap: wrap; }
+            .nav-cta { display: none; }
+            .hamburger { display: flex; }
+
+            /* Sections */
+            section { padding: 5rem 5%; }
+
+            /* Services strip */
+            .services-mini { gap: 2rem; padding: 3rem 5%; }
+
+            /* About */
+            .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+
+            /* Before/After */
             .ba-container { grid-template-columns: 1fr; }
+            .ba-box { height: 280px; }
+
+            /* Gallery */
             .masonry { columns: 2; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
+
+            /* Contact */
+            .contact-outer-grid {
+                grid-template-columns: 1fr;
+                padding: 2.5rem;
+                gap: 2.5rem;
+            }
+            .contact-form-row { grid-template-columns: 1fr; }
+
+            /* Footer */
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+            footer { padding: 5rem 5% 2rem; }
+        }
+
+        @media (max-width: 600px) {
+            /* Typography */
+            .display-lg {
+                font-size: 30px;
+                line-height: 36px;
+            }
+
+            /* Navigation */
+            nav { padding: 1rem 4%; }
+            .logo { font-size: 1.4rem; }
+
+            /* Sections */
+            section { padding: 3.5rem 4%; }
+            .section-title { margin-bottom: 3rem; }
+
+            /* Services strip */
+            .services-mini {
+                gap: 1.5rem;
+                padding: 2.5rem 4%;
+                justify-content: space-around;
+            }
+            .s-item i { font-size: 1.6rem; }
+
+            /* Hero */
+            #hero { padding: 0 5%; }
+            .hero-content p { font-size: 13px; }
+
+            /* Before/After */
+            .ba-box { height: 200px; }
+
+            /* Gallery */
+            .masonry { columns: 2; column-gap: 1rem; }
+            .masonry-item { margin-bottom: 1rem; }
+
+            /* Contact */
+            .contact-outer-grid { padding: 1.5rem; }
+
+            /* Footer */
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            footer { padding: 4rem 4% 2rem; }
+
+            /* WhatsApp */
+            .wa-float {
+                width: 55px;
+                height: 55px;
+                right: 16px;
+                bottom: 16px;
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .display-lg { font-size: 24px; line-height: 30px; }
+            .masonry { columns: 1; }
+            .services-mini { gap: 1.2rem; }
         }
     </style>
 </head>
@@ -351,9 +542,17 @@
     </div>
 
     <!-- WhatsApp -->
-    <a href="https://wa.me/919000000000" class="wa-float">
+    <a href="https://wa.me/919000000000" class="wa-float" aria-label="Chat on WhatsApp">
         <i class="ph ph-whatsapp-logo"></i>
     </a>
+
+    <!-- Mobile Nav Overlay -->
+    <div id="mobile-nav" class="mobile-nav" role="navigation" aria-label="Mobile navigation">
+        <a href="#" onclick="showPage('home'); closeMobileNav();">Home</a>
+        <a href="#" onclick="showPage('services'); closeMobileNav();">Services</a>
+        <a href="#" onclick="showPage('gallery'); closeMobileNav();">Gallery</a>
+        <a href="#" onclick="showPage('contact'); closeMobileNav();" class="cta-btn" style="margin-top: 1rem;">Reserve Session</a>
+    </div>
 
     <!-- Nav -->
     <nav>
@@ -366,7 +565,12 @@
             <a href="#" onclick="showPage('gallery')">Gallery</a>
             <a href="#" onclick="showPage('contact')">Book Now</a>
         </div>
-        <a href="#contact" class="cta-btn" onclick="showPage('contact')">Reserve Session</a>
+        <a href="#contact" class="cta-btn nav-cta" onclick="showPage('contact')">Reserve Session</a>
+        <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Open menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </nav>
 
     <!-- --- HOME PAGE --- -->
@@ -388,9 +592,12 @@
         </div>
 
         <section id="about">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;">
+            <div class="about-grid">
                 <div class="img-reveal">
-                    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1000&auto=format&fit=crop" alt="Salon" style="width: 100%; border-radius: 4px;">
+                    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1000&auto=format&fit=crop"
+                         alt="Salon interior"
+                         loading="lazy"
+                         onerror="this.onerror=null;this.src='https://picsum.photos/seed/salon1/1000/750';">
                 </div>
                 <div>
                     <span class="label-md">SINCE 2012</span>
@@ -408,12 +615,36 @@
             </div>
             <div class="grid">
                 <div class="ba-container">
-                    <div class="ba-box"><div class="ba-tag">Before</div><img src="https://images.unsplash.com/photo-1595476108010-b4d1f80d77d2?q=80&w=800&auto=format&fit=crop" alt="Before"></div>
-                    <div class="ba-box"><div class="ba-tag" style="background: var(--rose-gold);">After</div><img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?q=80&w=800&auto=format&fit=crop" alt="After"></div>
+                    <div class="ba-box">
+                        <div class="ba-tag">Before</div>
+                        <img src="https://images.unsplash.com/photo-1595476108010-b4d1f80d77d2?q=80&w=800&auto=format&fit=crop"
+                             alt="Before transformation"
+                             loading="lazy"
+                             onerror="this.onerror=null;this.src='https://picsum.photos/seed/before1/800/600';">
+                    </div>
+                    <div class="ba-box">
+                        <div class="ba-tag" style="background: var(--rose-gold);">After</div>
+                        <img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?q=80&w=800&auto=format&fit=crop"
+                             alt="After transformation"
+                             loading="lazy"
+                             onerror="this.onerror=null;this.src='https://picsum.photos/seed/after1/800/600';">
+                    </div>
                 </div>
                 <div class="ba-container">
-                    <div class="ba-box"><div class="ba-tag">Before</div><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=800&auto=format&fit=crop" alt="Before"></div>
-                    <div class="ba-box"><div class="ba-tag" style="background: var(--rose-gold);">After</div><img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop" alt="After"></div>
+                    <div class="ba-box">
+                        <div class="ba-tag">Before</div>
+                        <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=800&auto=format&fit=crop"
+                             alt="Before transformation"
+                             loading="lazy"
+                             onerror="this.onerror=null;this.src='https://picsum.photos/seed/before2/800/600';">
+                    </div>
+                    <div class="ba-box">
+                        <div class="ba-tag" style="background: var(--rose-gold);">After</div>
+                        <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop"
+                             alt="After transformation"
+                             loading="lazy"
+                             onerror="this.onerror=null;this.src='https://picsum.photos/seed/after2/800/600';">
+                    </div>
                 </div>
             </div>
         </section>
@@ -476,14 +707,14 @@
                 <h2 class="display-lg">Reserve Your Experience</h2>
                 <div class="line"></div>
             </div>
-            <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 5rem; background: var(--white); padding: 5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.03);">
+            <div class="contact-outer-grid">
                 <form>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
-                        <input type="text" placeholder="Name" style="padding: 1rem; border: 1px solid #EEE; outline: none; background: #fcfcfc;">
-                        <input type="tel" placeholder="Phone" style="padding: 1rem; border: 1px solid #EEE; outline: none; background: #fcfcfc;">
+                    <div class="contact-form-row">
+                        <input type="text" placeholder="Name">
+                        <input type="tel" placeholder="Phone">
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
-                        <select style="padding: 1rem; border: 1px solid #EEE; outline: none; background: #fcfcfc;">
+                    <div class="contact-form-row">
+                        <select style="padding: 1rem; border: 1px solid #EEE; outline: none; background: #fcfcfc; font-family: 'Inter', sans-serif; font-size: 14px;">
                             <option>Service Interested In</option>
                             <option>Hair Services</option>
                             <option>Skin Treatment</option>
@@ -492,17 +723,17 @@
                         </select>
                         <input type="date" style="padding: 1rem; border: 1px solid #EEE; outline: none; background: #fcfcfc;">
                     </div>
-                    <textarea placeholder="Special Requests..." rows="5" style="width: 100%; padding: 1rem; border: 1px solid #EEE; outline: none; background: #fcfcfc; margin-bottom: 2rem;"></textarea>
+                    <textarea placeholder="Special Requests..." rows="5" style="width: 100%; padding: 1rem; border: 1px solid #EEE; outline: none; background: #fcfcfc; margin-bottom: 2rem; font-family: 'Inter', sans-serif; font-size: 14px;"></textarea>
                     <button type="submit" class="cta-btn" style="width: 100%;">Submit Booking Request</button>
-                    <a href="https://wa.me/919000000000" class="cta-btn" style="width: 100%; display: block; text-align: center; background: #25D366; margin-top: 1rem;">Book Instantly via WhatsApp</a>
+                    <a href="https://wa.me/919000000000" class="cta-btn" style="width: 100%; text-align: center; background: #25D366; margin-top: 1rem;">Book Instantly via WhatsApp</a>
                 </form>
                 <div>
                     <h3 class="serif" style="margin-bottom: 2rem;">Visit Our Sanctuary</h3>
                     <p style="margin-bottom: 2.5rem;"><i class="ph ph-map-pin" style="color: var(--rose-gold);"></i> No. 12, Race Course Road,<br>Gopalapuram, Coimbatore,<br>Tamil Nadu 641018</p>
-                    
+
                     <h4 class="serif" style="margin-bottom: 1rem;">Opening Hours</h4>
                     <p style="margin-bottom: 2.5rem;">Tue - Sun: 10:00 AM - 8:30 PM<br>Mon: Closed (Weekly Holiday)</p>
-                    
+
                     <h4 class="serif" style="margin-bottom: 1rem;">Contact Us</h4>
                     <p>+91 422 245 0000<br>hello@rosegoldsalon.in</p>
                 </div>
@@ -513,12 +744,12 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-col">
-                <a href="#" class="logo" style="color: var(--white); margin-bottom: 1.5rem;">ROSE<span>GOLD</span></a>
-                <p style="opacity: 0.6;">Coimbatore's premier luxury destination for beauty and wellness since 2012.</p>
+                <a href="#" class="logo" onclick="showPage('home')" style="color: var(--white); margin-bottom: 1.5rem; display: inline-block;">ROSE<span>GOLD</span></a>
+                <p style="opacity: 0.6; margin-top: 1rem;">Coimbatore's premier luxury destination for beauty and wellness since 2012.</p>
                 <div class="social-icons">
-                    <a href="#"><i class="ph ph-instagram-logo"></i></a>
-                    <a href="#"><i class="ph ph-facebook-logo"></i></a>
-                    <a href="#"><i class="ph ph-pinterest-logo"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="ph ph-facebook-logo"></i></a>
+                    <a href="#" aria-label="Pinterest"><i class="ph ph-pinterest-logo"></i></a>
                 </div>
             </div>
             <div class="footer-col">
@@ -561,20 +792,20 @@
         ];
 
         const galleryImages = [
-            "https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=800",
-            "https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800",
-            "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=800",
-            "https://images.unsplash.com/photo-1595476108010-b4d1f80d77d2?q=80&w=800",
-            "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=800",
-            "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800",
-            "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?q=80&w=800",
-            "https://images.unsplash.com/photo-1527799822367-a05eb570737f?q=80&w=800"
+            { url: "https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=800&auto=format&fit=crop", fallback: "https://picsum.photos/seed/g1/800/600" },
+            { url: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop", fallback: "https://picsum.photos/seed/g2/800/900" },
+            { url: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=800&auto=format&fit=crop", fallback: "https://picsum.photos/seed/g3/800/700" },
+            { url: "https://images.unsplash.com/photo-1595476108010-b4d1f80d77d2?q=80&w=800&auto=format&fit=crop", fallback: "https://picsum.photos/seed/g4/800/600" },
+            { url: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=800&auto=format&fit=crop", fallback: "https://picsum.photos/seed/g5/800/800" },
+            { url: "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&auto=format&fit=crop", fallback: "https://picsum.photos/seed/g6/800/600" },
+            { url: "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?q=80&w=800&auto=format&fit=crop", fallback: "https://picsum.photos/seed/g7/800/700" },
+            { url: "https://images.unsplash.com/photo-1527799822367-a05eb570737f?q=80&w=800&auto=format&fit=crop", fallback: "https://picsum.photos/seed/g8/800/900" }
         ];
 
         function loadContent() {
             const sGrid = document.getElementById('services-grid');
             const gGrid = document.getElementById('gallery-grid');
-            
+
             if (sGrid) {
                 sGrid.innerHTML = services.map(s => `
                     <div class="service-card">
@@ -582,15 +813,18 @@
                         <h3 class="display-lg" style="font-size: 24px; line-height: 32px; margin-bottom: 1rem;">${s.name}</h3>
                         <p class="body-md" style="margin-bottom: 1rem;">${s.desc}</p>
                         <span class="price">${s.price}</span>
-                        <a href="https://wa.me/919000000000?text=Booking for ${s.name}" class="cta-btn">Book Now</a>
+                        <a href="https://wa.me/919000000000?text=Booking for ${encodeURIComponent(s.name)}" class="cta-btn">Book Now</a>
                     </div>
                 `).join('');
             }
 
             if (gGrid) {
-                gGrid.innerHTML = galleryImages.map(img => `
+                gGrid.innerHTML = galleryImages.map((img, i) => `
                     <div class="masonry-item">
-                        <img src="${img}&auto=format&fit=crop" alt="Gallery Work" onerror="this.src='https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=500';">
+                        <img src="${img.url}"
+                             alt="Gallery Work ${i + 1}"
+                             loading="lazy"
+                             onerror="this.onerror=null;this.src='${img.fallback}';">
                     </div>
                 `).join('');
             }
@@ -602,10 +836,28 @@
             setTimeout(() => {
                 document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
                 document.getElementById(pageId + '-page').classList.add('active');
-                window.scrollTo(0,0);
+                window.scrollTo(0, 0);
                 ScrollTrigger.refresh();
             }, 600);
             setTimeout(() => curtain.classList.remove('active'), 1200);
+        }
+
+        function toggleMobileNav() {
+            const nav = document.getElementById('mobile-nav');
+            const btn = document.getElementById('hamburger');
+            const isOpen = nav.classList.toggle('open');
+            btn.classList.toggle('open', isOpen);
+            btn.setAttribute('aria-expanded', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        }
+
+        function closeMobileNav() {
+            const nav = document.getElementById('mobile-nav');
+            const btn = document.getElementById('hamburger');
+            nav.classList.remove('open');
+            btn.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
         }
 
         // --- Sparkle Effect ---
@@ -631,16 +883,13 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadContent();
             initSparkles();
-            
-            // GSAP Animations
+
             gsap.registerPlugin(ScrollTrigger);
 
             const reveals = document.querySelectorAll('.reveal');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
+                    if (entry.isIntersecting) entry.target.classList.add('active');
                 });
             }, { threshold: 0.1 });
             reveals.forEach(r => observer.observe(r));
